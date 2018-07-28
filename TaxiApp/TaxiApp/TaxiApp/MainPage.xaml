@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TaxiApp"
+             xmlns:ei="clr-namespace:TaxiApp.MarkupExtensions"
+             x:Class="TaxiApp.MainPage">
+
+    <AbsoluteLayout>
+        <Image AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               x:Name="image"
+               Aspect="AspectFill"
+               Source="{ei:EmbeddedImage ResourceId=TaxiApp.Images.taxi.jpg}"/>
+        <StackLayout Orientation="Horizontal"
+                     AbsoluteLayout.LayoutBounds="0.5,0.5,0.8,0.1"
+                     AbsoluteLayout.LayoutFlags="All">
+            <Label Text="TAXI"
+                   FontSize="55"
+                   TextColor="White"
+                   FontAttributes="Bold"/>
+            <Label Text="Novi Sad"
+                   FontSize="55"
+                   TextColor="White"
+                   Margin="2,0,0,0"
+                   FontAttributes="Italic"/>
+        </StackLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,1,1,110"
+                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
+            <Button Text=" Log In " FontAttributes="Bold" FontSize="Large" TextColor="White" BackgroundColor="Black" BorderColor="Black" Opacity="0.5" HorizontalOptions="CenterAndExpand"/>
+            <Button Text="Register" FontAttributes="Bold" FontSize="Large" TextColor="White" BackgroundColor="Black" BorderColor="Black" Opacity="0.5" HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </AbsoluteLayout>
+
+</ContentPage>

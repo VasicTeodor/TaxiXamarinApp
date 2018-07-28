@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ei="clr-namespace:TaxiApp.MarkupExtensions"
+             x:Class="TaxiApp.Views.RegisterView">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Image AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               x:Name="image"
+               Aspect="AspectFill"
+               Source="{ei:EmbeddedImage ResourceId=TaxiApp.Images.taxi1.jpg}"/>
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                        AbsoluteLayout.LayoutFlags="All">
+                <StackLayout x:Name="Container"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             AbsoluteLayout.LayoutFlags="All"
+                             Padding="20">
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                        <Label Text="Register" FontSize="55"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
+                        <Entry Text="{Binding Name}" Placeholder="Name" Keyboard="Text" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                        <Entry Text="{Binding Surname}" Placeholder="Surname" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                        <Entry Text="{Binding Email}" Placeholder="Email" Keyboard="Email" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                        <Entry Text="{Binding Phone}" Placeholder="Phone" Keyboard="Telephone" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                        <Entry Text="{Binding Jmbg}" Placeholder="JMBG" Keyboard="Numeric" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                        <StackLayout Orientation="Horizontal" Margin="0,10">
+                            <Label Text="Male" VerticalOptions="CenterAndExpand"/>
+                            <Switch IsToggled="{Binding IsPublic}" />
+                            <Label Text="Female" VerticalOptions="CenterAndExpand"/>
+                        </StackLayout>
+                        <Entry Text="{Binding Username}" Placeholder="Username" Keyboard="Text" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                        <Entry Text="{Binding Password}" Placeholder="Password" Keyboard="Default" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Margin="0,20">
+                        <Button Text=" Register " FontAttributes="Bold"
+                                FontSize="Medium" TextColor="White"
+                                BackgroundColor="Black" BorderColor="Black"
+                                Opacity="0.5"
+                                Command="{Binding RegisterCommand}" />
+                        <Button Text=" Cancel " FontAttributes="Bold"
+                                FontSize="Medium" TextColor="White"
+                                BackgroundColor="Black" BorderColor="Black"
+                                Opacity="0.5"
+                                Command="{Binding CancelCommand}" />
+                        <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

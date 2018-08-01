@@ -8,7 +8,7 @@ namespace TaxiApp.Settings
 {
     public static class AppSettings
     {
-        private const string DefaultBaseEndpoint = "http://localhost:3577";
+        private const string DefaultBaseEndpoint = "http://169.254.80.80:7031";
         private static ISettings Settings => CrossSettings.Current;
 
         // API Endpoints

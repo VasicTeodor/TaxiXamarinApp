@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TaxiApp.Models;
 using TaxiApp.Services.Interfaces;
 using TaxiApp.Settings;
 using TaxiApp.Settings.Interfaces;
@@ -22,9 +23,25 @@ namespace TaxiApp.Services
             _requestService = requestService;
             _runtimeContext = runtimeContext;
         }
-        public Task<bool> Login(string userName, string password)
+        public async Task<bool> Login(string userName, string password)
         {
-            throw new NotImplementedException();
+            UriBuilder builder = new UriBuilder(_runtimeContext.BaseEndpoint)
+            {
+                Path = "api/Login/SignIn"
+            };
+
+            LoginClass login = new LoginClass
+            {
+                Password = password,
+                Username = userName
+            };
+
+            var message = await _requestService.PostAsync<LoginClass, LoginDto>(builder.Uri, login);
+
+            _runtimeContext.Token = message.AccessToken.ToString();
+            _runtimeContext.UserId = message.User.Id;
+
+            return await Task.FromResult(true);
         }
 
         public Task<bool> Logout()

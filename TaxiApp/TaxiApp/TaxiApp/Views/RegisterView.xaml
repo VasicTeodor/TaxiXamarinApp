@@ -23,12 +23,10 @@
                         <Entry Text="{Binding Email}" Placeholder="Email" Keyboard="Email" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Phone}" Placeholder="Phone" Keyboard="Telephone" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Jmbg}" Placeholder="JMBG" Keyboard="Numeric" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
-                        <StackLayout Orientation="Horizontal" Margin="0,10">
-                            <Label Text="Male" VerticalOptions="CenterAndExpand"/>
-                            <Switch IsToggled="{Binding IsPublic}" />
-                            <Label Text="Female" VerticalOptions="CenterAndExpand"/>
-                        </StackLayout>
-                        <Entry Text="{Binding Username}" Placeholder="Username" Keyboard="Text" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
+                        
+                        <Picker Margin="0,10" ItemsSource="{Binding Genders}" SelectedIndex="1" SelectedItem="{Binding Gender}" TextColor="White" FontSize="Medium" FontAttributes="Bold"/>
+
+                        <Entry Text="{Binding UserName}" Placeholder="Username" Keyboard="Text" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Password}" Placeholder="Password" Keyboard="Default" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                     </StackLayout>
                     <StackLayout VerticalOptions="End" Margin="0,20">

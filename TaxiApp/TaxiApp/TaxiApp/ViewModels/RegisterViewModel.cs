@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TaxiApp.Models;
 using TaxiApp.Services.Interfaces;
 using Xamarin.Forms;
 
@@ -21,6 +22,18 @@ namespace TaxiApp.ViewModels
             RegisterCommand = new Command(async () => await RegisterNewUser(),
                 () => !IsBusy && !string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password) && !string.IsNullOrWhiteSpace(Email));
             CancelCommand = new Command(async () => await CancelLogin());
+
+            Genders = new List<string> { "Male", "Female" };
+        }
+
+        private List<string> _genders;
+        public List<string> Genders
+        {
+            get { return _genders; }
+            set
+            {
+                _genders = value;
+            }
         }
 
         private bool _isBusy;
@@ -35,6 +48,30 @@ namespace TaxiApp.ViewModels
             }
         }
 
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+                RegisterCommand.ChangeCanExecute();
+            }
+        }
+
+        private string _surname;
+        public string Surname
+        {
+            get { return _surname; }
+            set
+            {
+                _surname = value;
+                OnPropertyChanged();
+                RegisterCommand.ChangeCanExecute();
+            }
+        }
+
         private string _userName;
         public string UserName
         {
@@ -42,6 +79,32 @@ namespace TaxiApp.ViewModels
             set
             {
                 _userName = value;
+                OnPropertyChanged();
+                RegisterCommand.ChangeCanExecute();
+            }
+        }
+
+        private string _phone;
+
+        public string Phone
+        {
+            get { return _phone; }
+            set
+            {
+                _phone = value;
+                OnPropertyChanged();
+                RegisterCommand.ChangeCanExecute();
+            }
+        }
+
+        private string _jmbg;
+
+        public string Jmbg
+        {
+            get { return _jmbg; }
+            set
+            {
+                _jmbg = value;
                 OnPropertyChanged();
                 RegisterCommand.ChangeCanExecute();
             }
@@ -71,16 +134,17 @@ namespace TaxiApp.ViewModels
             }
         }
 
-        private bool _isPublic;
-        public bool IsPublic
+        private string _gender;
+
+        public string Gender
         {
-            get { return _isPublic; }
-            set
-            {
-                _isPublic = value;
+            get { return _gender; }
+            set {
+                _gender = value;
                 OnPropertyChanged();
             }
         }
+
 
         private async Task RegisterNewUser()
         {
@@ -88,20 +152,25 @@ namespace TaxiApp.ViewModels
             {
                 IsBusy = true;
 
-                //CreateProfileDto newProfile = new CreateProfileDto
-                //{
-                //    IsPublic = IsPublic,
-                //    Handle = UserName,
-                //    User = new AccountDto
-                //    {
-                //        UserName = UserName,
-                //        Password = Password,
-                //        Email = Email
-                //    }
-                //};
+                Enums.Genders cosenGender = (Enums.Genders)Enum.Parse(typeof(Enums.Genders), _gender);
 
-                //await _profileService.CreateProfile(newProfile);
-                await _navigationService.NavigateAsync<LoginViewModel>();
+                Customer newCustomer = new Customer
+                {
+                    Email = _email,
+                    Id = new Guid(),
+                    IsBanned = false,
+                    Jmbg = _jmbg,
+                    Name = _name,
+                    Password = _password,
+                    Phone = _phone,
+                    Surname = _surname,
+                    Username = _userName,
+                    Gender = cosenGender,
+                    Role = Enums.Roles.Customer
+                };
+
+                await _profileService.CreateProfile(newCustomer);
+                await _navigationService.NavigateAsync<DrivesViewModel>();
             }
             catch (Exception ex)
             {

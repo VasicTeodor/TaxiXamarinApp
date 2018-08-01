@@ -14,6 +14,7 @@ namespace TaxiApp
         public static IRequestService RequestService => new RequestService();
         public static IAuthenticationService AuthenticationService => new AuthenticationService(RequestService);
         public static IProfileService ProfileService => new ProfileService(RequestService, AuthenticationService);
+        public static IDriveServices DriveServices => new DriveServices(RequestService, AuthenticationService);
 
         public void Initialize()
         {

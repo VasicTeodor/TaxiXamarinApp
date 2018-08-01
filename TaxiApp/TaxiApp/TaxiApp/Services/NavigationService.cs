@@ -24,7 +24,8 @@ namespace TaxiApp.Services
 
         public void Register<TView, TViewModel>()
         {
-            _pagesByType.Add(typeof(TView), typeof(TViewModel));
+            if(!_pagesByType.Keys.Contains(typeof(TView)))
+                _pagesByType.Add(typeof(TView), typeof(TViewModel));
         }
 
         public void SetRootPage(Type viewModelType)

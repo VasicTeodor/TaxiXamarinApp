@@ -1,12 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ei="clr-namespace:TaxiApp.MarkupExtensions"
              x:Class="TaxiApp.Views.DrivesView">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <AbsoluteLayout>
+            <Image AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               x:Name="image"
+               Aspect="AspectFill"
+               Source="{ei:EmbeddedImage ResourceId=TaxiApp.Images.taxi1.jpg}"/>
+            <StackLayout x:Name="Container"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             AbsoluteLayout.LayoutFlags="All"
+                             Padding="20">
+                    <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                        <Label Text="My Drives" FontSize="Large"  FontAttributes="Bold" TextColor="White" Margin="0,20" HorizontalOptions="StartAndExpand"/>
+                    <Button Text="Profile" TextColor="White"
+                            FontAttributes="Bold" FontSize="Small"
+                            BackgroundColor="Black" BorderColor="Black"
+                            Opacity="0.5" HorizontalOptions="End"
+                            Command="{Binding ViewProfileCommand}"/>
+                    <Button Text="Log Out" TextColor="White"
+                            FontAttributes="Bold" FontSize="Small" 
+                            BackgroundColor="Black" BorderColor="Black"
+                            Opacity="0.5" HorizontalOptions="End"
+                            Command="{Binding LogOutCommand}"/>
+                </StackLayout>
+                <StackLayout>
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+                    <ListView x:Name="DrivesList" BackgroundColor="Black"
+                              Opacity="0.5" IsPullToRefreshEnabled="True"
+                              HasUnevenRows="True"
+                              ItemsSource="{Binding DriveList}" RefreshCommand="{Binding RefreshCommand}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                        <Label Text="{Binding Path=Address.Address}" FontAttributes="Bold" FontSize="Medium" TextColor="White"/>
+                                        <Label Text="{Binding Path=Date, StringFormat='{}{0:d}'}" FontAttributes="Italic" FontSize="Small" TextColor="White"/>
+                                    </StackLayout>
+                                </ViewCell>
+                                <!--<TextCell Text="{Binding Path=Address.Address}" Detail="{Binding Path=Date, StringFormat=d}" TextColor="White"/>-->
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+                <StackLayout VerticalOptions="End" Margin="0,20">
+                    <Button Text="New Drive" FontAttributes="Bold"
+                            FontSize="Medium" TextColor="White"
+                            BackgroundColor="Black" BorderColor="Black"
+                            Opacity="0.5"
+                            Command="{Binding NewDriveCommand}" />
+                </StackLayout>
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -41,9 +41,29 @@ namespace TaxiApp.Services
             return await Task.FromResult(true);
         }
 
-        public Task GetProfile(Guid id, string token)
+        public async Task<Customer> GetProfile(Guid id, string token)
         {
-            throw new NotImplementedException();
+            UriBuilder builder = new UriBuilder(_runtimeContext.BaseEndpoint)
+            {
+                Path = "api/Customer/GetCustomer",
+                Query = $"id={id}"
+            };
+
+             var message = await _requestService.GetAsync<Customer>(builder.Uri, token);
+
+            return message;
+        }
+
+        public async Task<Customer> UpdateProfile(Guid id, Customer profile, string token)
+        {
+            UriBuilder builder = new UriBuilder(_runtimeContext.BaseEndpoint)
+            {
+                Path = "api/Customer/UpdateCustomer"
+            };
+
+            var message = await _requestService.PutAsync<Customer, Customer>(builder.Uri, profile, token);
+
+            return message as Customer;
         }
     }
 }

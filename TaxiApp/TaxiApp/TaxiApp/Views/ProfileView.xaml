@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ei="clr-namespace:TaxiApp.MarkupExtensions"
-             x:Class="TaxiApp.Views.RegisterView">
+             x:Class="TaxiApp.Views.ProfileView">
     <ContentPage.Content>
         <AbsoluteLayout>
             <Image AbsoluteLayout.LayoutBounds="0,0,1,1"
@@ -17,29 +17,29 @@
                              AbsoluteLayout.LayoutFlags="All"
                              Padding="20">
                     <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
-                        <Label Text="Register" FontSize="55"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
+                        <Label Text="My Profile" FontSize="55"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
                         <Entry Text="{Binding Name}" Placeholder="Name" Keyboard="Text" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Surname}" Placeholder="Surname" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Email}" Placeholder="Email" Keyboard="Email" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Phone}" Placeholder="Phone" Keyboard="Telephone" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Jmbg}" Placeholder="JMBG" Keyboard="Numeric" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
-                        
-                        <Picker Margin="0,10" ItemsSource="{Binding Genders}" SelectedIndex="0" SelectedItem="{Binding Gender}" TextColor="White" FontSize="Medium" FontAttributes="Bold"/>
+
+                        <Picker Margin="0,10" ItemsSource="{Binding Genders}" SelectedIndex="1" SelectedItem="{Binding Gender}" TextColor="White" FontSize="Medium" FontAttributes="Bold"/>
 
                         <Entry Text="{Binding UserName}" Placeholder="Username" Keyboard="Text" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                         <Entry Text="{Binding Password}" Placeholder="Password" IsPassword="True" Keyboard="Default" MaxLength="13" TextColor="White" PlaceholderColor="WhiteSmoke"/>
                     </StackLayout>
                     <StackLayout VerticalOptions="End" Margin="0,20">
-                        <Button Text=" Register " FontAttributes="Bold"
+                        <Button Text=" Change " FontAttributes="Bold"
                                 FontSize="Medium" TextColor="White"
                                 BackgroundColor="Black" BorderColor="Black"
                                 Opacity="0.5"
-                                Command="{Binding RegisterCommand}" />
-                        <Button Text=" Cancel " FontAttributes="Bold"
+                                Command="{Binding ChangeCommand}" />
+                        <Button Text=" Back " FontAttributes="Bold"
                                 FontSize="Medium" TextColor="White"
                                 BackgroundColor="Black" BorderColor="Black"
                                 Opacity="0.5"
-                                Command="{Binding CancelCommand}" />
+                                Command="{Binding BackCommand}" />
                         <ActivityIndicator IsRunning="{Binding IsBusy}"/>
                     </StackLayout>
                 </StackLayout>

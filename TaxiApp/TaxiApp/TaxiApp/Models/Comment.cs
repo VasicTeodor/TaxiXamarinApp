@@ -10,7 +10,7 @@ namespace TaxiApp.Models
         public Guid CommentId { get; set; }
         public string Description { get; set; }
         public DateTime CreatedOn { get; set; }
-        public User CreatedBy { get; set; }
+        public Customer CreatedBy { get; set; }
         public Drive CommentedOn { get; set; }
         public int Grade { get; set; }
     }

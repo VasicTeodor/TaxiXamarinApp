@@ -1,12 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ei="clr-namespace:TaxiApp.MarkupExtensions"
              x:Class="TaxiApp.Views.DriveView">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <AbsoluteLayout>
+            <Image AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               x:Name="image"
+               Aspect="AspectFill"
+               Source="{ei:EmbeddedImage ResourceId=TaxiApp.Images.taxi1.jpg}"/>
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                        AbsoluteLayout.LayoutFlags="All">
+                <StackLayout x:Name="Container"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             AbsoluteLayout.LayoutFlags="All"
+                             Padding="20">
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                        <Label Text="Drive Details" FontSize="55"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
+                        <Label Text="Starting Point:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding Address}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Destination:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding Destination}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Price:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding Price}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Car Type:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding CarType}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Driver:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding Driver}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Date:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding Path=Date, StringFormat='{}{0:d}'}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Comment" FontSize="35"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
+                        <Label Text="Text:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding CommentText}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Comment By:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding CommentBy}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Date Of Comment:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="{Binding CommentDate}" FontSize="Small" TextColor="White"/>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Margin="0,20">
+                        <Button Text=" Back " FontAttributes="Bold"
+                                FontSize="Medium" TextColor="White"
+                                BackgroundColor="Black" BorderColor="Black"
+                                Opacity="0.5"
+                                Command="{Binding BackCommand}" />
+                        <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

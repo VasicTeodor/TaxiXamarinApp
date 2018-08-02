@@ -10,21 +10,22 @@ using Xamarin.Forms.Xaml;
 namespace TaxiApp.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DrivesView : ContentPage
+	public partial class ProfileView : ContentPage
 	{
-        DrivesViewModel drivesViewModel;
+        ProfilViewModel _profilViewModel;
 
-		public DrivesView ()
+		public ProfileView ()
 		{
 			InitializeComponent ();
             NavigationPage.SetHasNavigationBar(this, false);
-            drivesViewModel = new DrivesViewModel(AppBootstrapper.NavigationService, AppBootstrapper.AuthenticationService, AppBootstrapper.DriveServices);
-            BindingContext = drivesViewModel;
-		}
+
+            _profilViewModel = new ProfilViewModel(AppBootstrapper.NavigationService, AppBootstrapper.ProfileService);
+            BindingContext = _profilViewModel;
+        }
 
         protected override async void OnAppearing()
         {
-            await drivesViewModel.InitializeAsync(null);
+            await _profilViewModel.InitializeAsync(null);
         }
     }
 }

@@ -51,7 +51,8 @@ namespace TaxiApp.Services
         {
             UriBuilder builder = new UriBuilder(_runtimeContext.BaseEndpoint)
             {
-                Path = $"api/Drive/GetDrive?id={id}"
+                Path = $"api/Drive/GetDrive",
+                Query = $"id={id}"
             };
 
             return await _requestService.GetAsync<Drive>(builder.Uri, token);

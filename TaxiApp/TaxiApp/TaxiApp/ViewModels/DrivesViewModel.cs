@@ -19,7 +19,7 @@ namespace TaxiApp.ViewModels
         
         public Command CreateDriveCommand { get; }
         public Command LogOutCommand { get; }
-        public Command<Guid> ViewProfileCommand { get; }
+        public Command ViewProfileCommand { get; }
         public Command<Guid> EditCommand { get; }
         public Command RefreshCommand { get; }
 
@@ -38,11 +38,9 @@ namespace TaxiApp.ViewModels
             CreateDriveCommand = new Command(async () => await CreateDrive(), () => !IsBusy);
             LogOutCommand = new Command(async () => await LogOut(), () => !IsBusy);
             RefreshCommand = new Command(async () => await Refresh(), () => !IsBusy);
-            //ViewProfileCommand = new Command<Guid>(async (id) => await ViewProfile(id), (id) => !IsBusy);
+            ViewProfileCommand = new Command(async () => await ViewProfile(), () => !IsBusy);
             EditCommand = new Command<Guid>(async (id) => await Edit(id), (id) => !IsBusy);
             //SearchCommand = new Command(async () => await Search(), () => !IsBusy);
-
-            GetAllDrives();
         }
 
         private ObservableCollection<Drive> _driveList;
@@ -56,6 +54,11 @@ namespace TaxiApp.ViewModels
             }
         }
 
+        public override async Task InitializeAsync(object navigationData)
+        {
+            await GetAllDrives();
+        }
+
         private bool _isBusy;
         public bool IsBusy
         {
@@ -66,7 +69,7 @@ namespace TaxiApp.ViewModels
                 OnPropertyChanged();
                 CreateDriveCommand.ChangeCanExecute();
                 EditCommand.ChangeCanExecute();
-                //ViewProfileCommand.ChangeCanExecute();
+                ViewProfileCommand.ChangeCanExecute();
             }
         }
 
@@ -107,7 +110,7 @@ namespace TaxiApp.ViewModels
                 IsBusy = false;
             }
         }
-
+        
         private async Task CreateDrive()
         {
             try
@@ -125,13 +128,12 @@ namespace TaxiApp.ViewModels
             }
         }
 
-        private async Task Edit(Guid id)
+        private async Task ViewProfile()
         {
             try
             {
                 IsBusy = true;
-                var selectedPost = DriveList.Single(x => x.DriveId == id);
-                await _navigationService.NavigateAsync<DrivesViewModel>(selectedPost);
+                await _navigationService.NavigateAsync<ProfilViewModel>();
             }
             catch (Exception ex)
             {
@@ -143,11 +145,42 @@ namespace TaxiApp.ViewModels
             }
         }
 
-        private async void GetAllDrives()
+        private async Task Edit(Guid id)
         {
-            var drives = await _driveServices.GetAllDrives(_runtimeContext.UserId, _runtimeContext.Token);
+            try
+            {
+                IsBusy = true;
+                var selectedDrive = DriveList.Single(x => x.DriveId == id);
+                await _navigationService.NavigateAsync<DriveViewModel>(selectedDrive);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
-            DriveList = new ObservableCollection<Drive>(drives);
+        private async Task GetAllDrives()
+        {
+            try
+            {
+                IsBusy = true;
+
+                var drives = await _driveServices.GetAllDrives(_runtimeContext.UserId, _runtimeContext.Token);
+
+                DriveList = new ObservableCollection<Drive>(drives);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

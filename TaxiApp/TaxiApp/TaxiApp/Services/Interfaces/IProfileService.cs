@@ -8,7 +8,8 @@ namespace TaxiApp.Services.Interfaces
 {
     public interface IProfileService
     {
-        Task GetProfile(Guid id, string token);
+        Task<Customer> GetProfile(Guid id, string token);
+        Task<Customer> UpdateProfile(Guid id, Customer profile, string token);
         Task<bool> CreateProfile(Customer profile);
     }
 }

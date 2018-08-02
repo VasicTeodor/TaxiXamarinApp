@@ -39,6 +39,9 @@
                                     <StackLayout>
                                         <Label Text="{Binding Path=Address.Address}" FontAttributes="Bold" FontSize="Medium" TextColor="White"/>
                                         <Label Text="{Binding Path=Date, StringFormat='{}{0:d}'}" FontAttributes="Italic" FontSize="Small" TextColor="White"/>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference Name=DrivesList}}" CommandParameter="{Binding DriveId}"/>
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </ViewCell>
                                 <!--<TextCell Text="{Binding Path=Address.Address}" Detail="{Binding Path=Date, StringFormat=d}" TextColor="White"/>-->

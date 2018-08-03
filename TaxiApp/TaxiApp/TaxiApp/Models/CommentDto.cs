@@ -7,11 +7,9 @@ namespace TaxiApp.Models
 {
     public class CommentDto
     {
-        public Guid CommentId { get; set; }
-        public Guid CreatedById { get; set; }
-        public Guid DriveId { get; set; }
-        public string Description { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public int Grade { get; set; }
+        public Guid driveId { get; set; }
+        public Guid orderedBy { get; set; }
+        public string text { get; set; }
+        public int grade { get; set; }
     }
 }

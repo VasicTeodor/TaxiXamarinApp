@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ei="clr-namespace:TaxiApp.MarkupExtensions"
+             x:Class="TaxiApp.Views.CommentView">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Image AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               x:Name="image"
+               Aspect="AspectFill"
+               Source="{ei:EmbeddedImage ResourceId=TaxiApp.Images.taxi1.jpg}"/>
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                        AbsoluteLayout.LayoutFlags="All">
+                <StackLayout x:Name="Container"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             AbsoluteLayout.LayoutFlags="All"
+                             Padding="20">
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                        <Label Text="Comment Drive" FontSize="55"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
+                        <Editor x:Name="commentText" VerticalOptions="StartAndExpand"
+                                BackgroundColor="Black" Opacity="0.5" TextColor="White"
+                                MinimumHeightRequest="200"
+                                Text="{Binding Text}"/>
+                        <Picker Margin="0,10" ItemsSource="{Binding Grades}" SelectedIndex="0" SelectedItem="{Binding Grade}" TextColor="White" FontSize="Medium" FontAttributes="Bold"/>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Margin="0,20">
+                        <Button Text=" Comment " FontAttributes="Bold"
+                                FontSize="Medium" TextColor="White"
+                                BackgroundColor="Black" BorderColor="Black"
+                                Opacity="0.5" x:Name="btnComment"
+                                Command="{Binding CommentCommand}" />
+                        <Button Text=" Back " FontAttributes="Bold"
+                                FontSize="Medium" TextColor="White"
+                                BackgroundColor="Black" BorderColor="Black"
+                                Opacity="0.5"
+                                Command="{Binding BackCommand}" />
+                        <ActivityIndicator IsRunning="{Binding IsBusy}"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

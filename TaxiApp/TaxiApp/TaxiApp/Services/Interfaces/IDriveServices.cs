@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace TaxiApp.Services.Interfaces
         Task<Drive> GetDrive(Guid id, string token);
         Task<bool> CreateDrive(string token);
         Task<bool> EditDrive(Guid id, string token);
+        Task<bool> CommentDrive(Guid id, string token, CommentDto jObject);
     }
 }

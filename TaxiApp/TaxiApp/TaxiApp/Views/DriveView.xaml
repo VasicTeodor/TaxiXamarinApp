@@ -20,25 +20,31 @@
                         <Label Text="Drive Details" FontSize="55"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
                         <Label Text="Starting Point:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
                         <Label Text="{Binding Address}" FontSize="Small" TextColor="White"/>
-                        <Label Text="Destination:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
-                        <Label Text="{Binding Destination}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Destination:" FontSize="Medium"  FontAttributes="Bold" TextColor="White" x:Name="lblDestinationX"/>
+                        <Label Text="{Binding Destination}" FontSize="Small" TextColor="White" x:Name="lblDestination"/>
                         <Label Text="Price:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
                         <Label Text="{Binding Price}" FontSize="Small" TextColor="White"/>
                         <Label Text="Car Type:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
                         <Label Text="{Binding CarType}" FontSize="Small" TextColor="White"/>
-                        <Label Text="Driver:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
-                        <Label Text="{Binding Driver}" FontSize="Small" TextColor="White"/>
+                        <Label Text="Driver:" FontSize="Medium"  FontAttributes="Bold" TextColor="White" x:Name="lblDriverX"/>
+                        <Label Text="{Binding Driver}" FontSize="Small" TextColor="White" x:Name="lblDriver"/>
                         <Label Text="Date:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
                         <Label Text="{Binding Path=Date, StringFormat='{}{0:d}'}" FontSize="Small" TextColor="White"/>
-                        <Label Text="Comment" FontSize="35"  FontAttributes="Bold" TextColor="White" Margin="0,20"/>
-                        <Label Text="Text:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
-                        <Label Text="{Binding CommentText}" FontSize="Small" TextColor="White"/>
-                        <Label Text="Comment By:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
-                        <Label Text="{Binding CommentBy}" FontSize="Small" TextColor="White"/>
-                        <Label Text="Date Of Comment:" FontSize="Medium"  FontAttributes="Bold" TextColor="White"/>
-                        <Label Text="{Binding CommentDate}" FontSize="Small" TextColor="White"/>
+                        
+                        <Label Text="Comment" FontSize="35"  FontAttributes="Bold" TextColor="White" Margin="0,20" x:Name="lblComment"/>
+                        <Label Text="Text:" FontSize="Medium"  FontAttributes="Bold" TextColor="White" x:Name="lblCommentTextX"/>
+                        <Label Text="{Binding CommentText}" FontSize="Small" TextColor="White" x:Name="lblCommentText"/>
+                        <Label Text="Comment By:" FontSize="Medium"  FontAttributes="Bold" TextColor="White" x:Name="lblCommentByX"/>
+                        <Label Text="{Binding CommentBy}" FontSize="Small" TextColor="White" x:Name="lblCommentBy"/>
+                        <Label Text="Date Of Comment:" FontSize="Medium"  FontAttributes="Bold" TextColor="White" x:Name="lblCommDateX"/>
+                        <Label Text="{Binding CommentDate}" FontSize="Small" TextColor="White" x:Name="lblCommentDate"/>
                     </StackLayout>
                     <StackLayout VerticalOptions="End" Margin="0,20">
+                        <Button Text=" Comment " FontAttributes="Bold"
+                                FontSize="Medium" TextColor="White"
+                                BackgroundColor="Black" BorderColor="Black"
+                                Opacity="0.5" x:Name="btnComment"
+                                Command="{Binding CommentCommand}" />
                         <Button Text=" Back " FontAttributes="Bold"
                                 FontSize="Medium" TextColor="White"
                                 BackgroundColor="Black" BorderColor="Black"

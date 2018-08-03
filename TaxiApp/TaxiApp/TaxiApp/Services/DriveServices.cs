@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,18 @@ namespace TaxiApp.Services
         public Task<bool> EditDrive(Guid id, string token)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> CommentDrive(Guid id, string token, CommentDto jObject)
+        {
+            UriBuilder builder = new UriBuilder(_runtimeContext.BaseEndpoint)
+            {
+                Path = "api/Customer/AddComment"
+            };
+
+            var message = await _requestService.PutAsync<CommentDto, Drive>(builder.Uri, jObject, token);
+
+            return await Task.FromResult(true);
         }
 
         public async Task<IEnumerable<Drive>> GetAllDrives(Guid id, string token)

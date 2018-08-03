@@ -31,6 +31,7 @@ namespace TaxiApp.ViewModels
         }
 
         private Guid _driveId;
+        private Drive _selectedDrive;
         public override void Initialize(object navigationData)
         {
             try
@@ -38,6 +39,8 @@ namespace TaxiApp.ViewModels
                 IsBusy = true;
 
                 var drive = navigationData as Drive;
+
+                _selectedDrive = drive;
 
                 Address = drive.Address.Address;
                 Destination = drive.Destination.Address;
@@ -209,7 +212,8 @@ namespace TaxiApp.ViewModels
         {
             try
             {
-                await _navigationService.NavigateAsync<DrivesViewModel>();
+                if(_selectedDrive != null)
+                    await _navigationService.NavigateAsync<CommentViewModel>(_selectedDrive);
             }
             catch (Exception ex)
             {

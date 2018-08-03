@@ -24,6 +24,7 @@ namespace TaxiApp.ViewModels
             CancelCommand = new Command(async () => await CancelLogin());
 
             Genders = new List<string> { "Male", "Female" };
+            Gender = "Male";
         }
 
         private List<string> _genders;

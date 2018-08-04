@@ -10,24 +10,29 @@ using Xamarin.Forms;
 
 namespace TaxiApp.ViewModels
 {
-    public class DriveViewModel : ViewModelBase
+    public class EditDriveViewModel : ViewModelBase
     {
         private readonly IDriveServices _driveServices;
 
         public Command BackCommand { get; }
-        public Command CommentCommand { get; }
+        public Command NewDriveCommand { get; }
+        public Command QuitDriveCommand { get; }
 
-        public DriveViewModel(INavigationService navigationService, IDriveServices driveService)
+        public EditDriveViewModel(INavigationService navigationService, IDriveServices driveService)
             : this(navigationService, driveService, new RuntimeContext())
         { }
 
-        public DriveViewModel(INavigationService navigationService, IDriveServices driveService, IRuntimeContext runtimeContext)
+        public EditDriveViewModel(INavigationService navigationService, IDriveServices driveService, IRuntimeContext runtimeContext)
             : base(navigationService, runtimeContext)
         {
             _driveServices = driveService;
 
             BackCommand = new Command(async () => await Back(), () => !IsBusy);
-            CommentCommand = new Command(async () => await CommentDrive(), () => !IsBusy);
+            NewDriveCommand = new Command(async () => await EditDrive(), () => !IsBusy);
+            QuitDriveCommand = new Command(async () => await QuitDrive(), () => !IsBusy);
+
+            CarTypes = new List<string> { "Bez_Naznake, Car, Kombi" };
+            CarType = "Bez_Naznake";
         }
 
         private Guid _driveId;
@@ -43,22 +48,9 @@ namespace TaxiApp.ViewModels
                 _selectedDrive = drive;
 
                 Address = drive.Address.Address;
-                Destination = drive.Destination.Address;
-                Price = drive.Price;
+                XAxis = drive.Address.X.ToString();
+                YAxis = drive.Address.Y.ToString();
                 CarType = drive.CarType.ToString();
-                Date = drive.Date.ToLongDateString();
-
-                if (drive.DrivedBy != null)
-                {
-                    Driver = drive.DrivedBy.Name + " " + drive.DrivedBy.Surname;
-                }
-
-                if(drive.Comments != null)
-                {
-                    CommentText = drive.Comments.Description;
-                    CommentBy = drive.Comments.CreatedBy.Name + " " + drive.Comments.CreatedBy.Surname + " - " + drive.Comments.CreatedBy.Role.ToString();
-                    CommentDate = drive.Comments.CreatedOn.ToLongDateString();
-                }
 
                 _driveId = drive.DriveId;
             }
@@ -81,9 +73,18 @@ namespace TaxiApp.ViewModels
                 _isBusy = value;
                 OnPropertyChanged();
                 BackCommand.ChangeCanExecute();
-                CommentCommand.ChangeCanExecute();
+                NewDriveCommand.ChangeCanExecute();
             }
         }
+
+        private List<string> _carTypes;
+
+        public List<string> CarTypes
+        {
+            get { return _carTypes; }
+            set { _carTypes = value; }
+        }
+
 
         private string _address;
 
@@ -94,30 +95,33 @@ namespace TaxiApp.ViewModels
             {
                 _address = value;
                 OnPropertyChanged();
+                NewDriveCommand.ChangeCanExecute();
             }
         }
 
-        private string _destination;
+        private string _yAxis;
 
-        public string Destination
+        public string YAxis
         {
-            get { return _destination; }
+            get { return _yAxis; }
             set
             {
-                _destination = value;
+                _yAxis = value;
                 OnPropertyChanged();
+                NewDriveCommand.ChangeCanExecute();
             }
         }
 
-        private double _price;
+        private string _xAxis;
 
-        public double Price
+        public string XAxis
         {
-            get { return _price; }
+            get { return _xAxis; }
             set
             {
-                _price = value;
+                _xAxis = value;
                 OnPropertyChanged();
+                NewDriveCommand.ChangeCanExecute();
             }
         }
 
@@ -130,66 +134,7 @@ namespace TaxiApp.ViewModels
             {
                 _carType = value;
                 OnPropertyChanged();
-            }
-        }
-
-        private string _driver;
-
-        public string Driver
-        {
-            get { return _driver; }
-            set
-            {
-                _driver = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _date;
-
-        public string Date
-        {
-            get { return _date; }
-            set
-            {
-                _date = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _commentText;
-
-        public string CommentText
-        {
-            get { return _commentText; }
-            set
-            {
-                _commentText = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _commentBy;
-
-        public string CommentBy
-        {
-            get { return _commentBy; }
-            set
-            {
-                _commentBy = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _commentDate;
-
-        public string CommentDate
-        {
-            get { return _commentDate; }
-            set
-            {
-                _commentDate = value;
-                OnPropertyChanged();
+                NewDriveCommand.ChangeCanExecute();
             }
         }
 
@@ -208,14 +153,48 @@ namespace TaxiApp.ViewModels
             }
         }
 
-        private async Task CommentDrive()
+        private async Task EditDrive()
         {
             try
             {
                 IsBusy = true;
 
-                if(_selectedDrive != null)
-                    await _navigationService.NavigateAsync<CommentViewModel>(_selectedDrive);
+                Drive newDrive = new Drive
+                {
+                    Address =
+                    {
+                        Address = Address,
+                        X = Double.Parse(XAxis),
+                        Y = Double.Parse(YAxis)
+                    },
+                    DriveId = _selectedDrive.DriveId,
+                    CarType =  (Enums.CarTypes)Enum.Parse(typeof(Enums.CarTypes), this.CarType)
+                };
+
+                await _driveServices.QuitDrive(_runtimeContext.Token, newDrive);
+
+                await _navigationService.NavigateAsync<DrivesViewModel>();
+
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task QuitDrive()
+        {
+            try
+            {
+                IsBusy = true;
+                
+                await _driveServices.EditDrive(_runtimeContext.UserId, _runtimeContext.Token, _selectedDrive);
+
+                await _navigationService.NavigateAsync<CommentViewModel>(_selectedDrive);
             }
             catch (Exception ex)
             {

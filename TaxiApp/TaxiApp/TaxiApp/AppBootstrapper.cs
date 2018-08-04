@@ -25,6 +25,8 @@ namespace TaxiApp
             NavigationService.Register<DriveView, DriveViewModel>();
             NavigationService.Register<ProfileView, ProfilViewModel>();
             NavigationService.Register<CommentView, CommentViewModel>();
+            NavigationService.Register<NewDriveView, NewDriveViewModel>();
+            NavigationService.Register<EditDriveView, EditDriveViewModel>();
         }
 
     }

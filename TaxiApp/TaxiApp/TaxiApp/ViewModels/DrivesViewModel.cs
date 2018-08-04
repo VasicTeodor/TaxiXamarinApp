@@ -150,8 +150,17 @@ namespace TaxiApp.ViewModels
             try
             {
                 IsBusy = true;
+                
                 var selectedDrive = DriveList.Single(x => x.DriveId == id);
-                await _navigationService.NavigateAsync<DriveViewModel>(selectedDrive);
+
+                if(selectedDrive.State == Enums.Status.Created)
+                {
+                    await _navigationService.NavigateAsync<EditDriveViewModel>(selectedDrive);
+                }
+                else
+                {
+                    await _navigationService.NavigateAsync<DriveViewModel>(selectedDrive);
+                }
             }
             catch (Exception ex)
             {

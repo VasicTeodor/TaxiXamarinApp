@@ -11,8 +11,9 @@ namespace TaxiApp.Services.Interfaces
     {
         Task<IEnumerable<Drive>> GetAllDrives(Guid id, string token);
         Task<Drive> GetDrive(Guid id, string token);
-        Task<bool> CreateDrive(string token);
-        Task<bool> EditDrive(Guid id, string token);
+        Task<bool> CreateDrive(string token, Drive drive);
+        Task<bool> QuitDrive(string token, Drive drive);
+        Task<bool> EditDrive(Guid id, string token, Drive drive);
         Task<bool> CommentDrive(Guid id, string token, CommentDto jObject);
     }
 }
